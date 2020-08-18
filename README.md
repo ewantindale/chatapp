@@ -1,0 +1,1 @@
+This chat application consists of a frontend using Electron and React (based on <a href="https://github.com/electron-react-boilerplate/electron-react-boilerplate">electron-react-boilerplate</a>) and a NodeJS backend connected to a PostgreSQL database.
