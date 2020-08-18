@@ -16,11 +16,21 @@ const CounterPage = (props: Record<string, any>) => (
   </React.Suspense>
 );
 
+const LazyChatPage = React.lazy(() =>
+  import(/* webpackChunkName: "ChatPage" */ './containers/ChatPage')
+);
+
+const ChatPage = (props: Record<string, any>) => (
+  <React.Suspense fallback={<h1>Loading...</h1>}>
+    <LazyChatPage {...props} />
+  </React.Suspense>
+);
+
 export default function Routes() {
   return (
     <App>
       <Switch>
-        <Route path={routes.COUNTER} component={CounterPage} />
+        <Route path={routes.CHAT} component={ChatPage} />
         <Route path={routes.HOME} component={HomePage} />
       </Switch>
     </App>
