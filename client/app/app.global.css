@@ -17,6 +17,8 @@ body {
   ); */
   font-family: Arial, Helvetica, Helvetica Neue, serif;
   overflow-y: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 h2 {

@@ -1,4 +1,53 @@
 .container {
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+.messageContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.message {
+  background-color: black;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.message .author {
+  font-weight: bold;
+}
+
+.messageForm {
+  margin-top: auto;
+  display: flex;
+  padding: 1rem;
+}
+
+.messageForm input {
+  background: none;
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: white;
+  margin-top: 1rem;
+  border: 1px solid #6a7e97;
+  transition: 0.2s ease;
+  width: 100%;
+}
+
+.messageForm input:hover {
+  border-color: #8d9fb4;
+}
+
+.messageForm input:focus {
+  outline: 0;
+  border: 1px solid white;
+}
+
+.messageForm input::placeholder {
+  color: #6a7e97;
+  opacity: 1;
 }
