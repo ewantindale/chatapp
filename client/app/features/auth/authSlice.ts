@@ -75,9 +75,7 @@ export const register = (name: string, password: string): AppThunk => {
       .post(api.USERS, body, config)
       .then((res) => dispatch(loginSuccess(res.data)))
       .catch((err) => {
-        console.log(
-          `Register failed with status code ${err.response.status}: ${err.response.data.msg}`
-        );
+        dispatch(authError(err.response.data.msg));
         dispatch(loginFail());
       });
   };
