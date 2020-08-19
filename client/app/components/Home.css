@@ -19,7 +19,7 @@
 
 .loginForm .input {
   background: none;
-  padding: 1rem;
+  padding: 0.5rem;
   font-size: 1.5rem;
   color: white;
   margin-top: 1rem;
@@ -42,7 +42,7 @@
 }
 
 .loginForm button {
-  padding: 1rem;
+  padding: 0.5rem;
   background: #6a7e97;
   border: 1px solid #6a7e97;
   color: #232c39;
@@ -57,4 +57,10 @@
 
 .loginForm button:focus {
   outline: 0;
+}
+
+.loginForm .errorMessage {
+  text-align: center;
+  margin-top: 1rem;
+  color: red;
 }

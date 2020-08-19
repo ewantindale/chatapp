@@ -1,0 +1,4 @@
+{
+  "AUTH": "http://localhost:5000/api/auth",
+  "USERS": "http://localhost:5000/api/users"
+}

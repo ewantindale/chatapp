@@ -13,7 +13,7 @@
 
 .message {
   background-color: black;
-  padding: 1rem;
+  padding: 0.5rem;
   margin-top: 1rem;
 }
 
@@ -29,7 +29,7 @@
 
 .messageForm input {
   background: none;
-  padding: 1rem;
+  padding: 0.5rem;
   font-size: 1.5rem;
   color: white;
   margin-top: 1rem;
@@ -50,4 +50,28 @@
 .messageForm input::placeholder {
   color: #6a7e97;
   opacity: 1;
+}
+
+.header {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoutButton {
+  padding: 0.5rem;
+  background: #6a7e97;
+  border: 1px solid #6a7e97;
+  color: #232c39;
+  font-size: 1.5rem;
+  transition: 0.2s ease;
+}
+
+.logoutButton:hover {
+  background-color: #8d9fb4;
+}
+
+.logoutButton:focus {
+  outline: 0;
 }
