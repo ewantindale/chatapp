@@ -28,7 +28,7 @@ export default function Chat() {
         <h2>Chat</h2>
         <span className={styles.userInfo}>
           Logged in as
-          {username}
+          {` ${username}`}
         </span>
         <button
           type="button"
