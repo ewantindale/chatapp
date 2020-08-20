@@ -5,6 +5,7 @@ import moment from 'moment';
 import { logout, selectUserInfo } from '../auth/authSlice';
 import { selectCurrentRoom } from '../rooms/roomsSlice';
 import { sendMessage, getMessages, selectMessages } from './chatSlice';
+import UserInfo from '../../components/UserInfo';
 import styles from './Chat.css';
 
 export default function Chat() {
@@ -36,7 +37,7 @@ export default function Chat() {
     });
 
     return () => {
-      socket.off();
+      socket.disconnect();
     };
   }, [dispatch]);
 
@@ -51,35 +52,23 @@ export default function Chat() {
     setMessage(event.target.value);
   }
 
-  function handleLogoutClicked() {
-    dispatch(logout());
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h3>{currentRoom ? currentRoom.name : null}</h3>
-        <span className={styles.userInfo}>
-          Logged in as
-          {` ${name}`}
-          <button
-            type="button"
-            onClick={handleLogoutClicked}
-            className={styles.logoutButton}
-          >
-            Logout
-          </button>
-        </span>
+        <UserInfo />
       </div>
 
       <div className={styles.messageContainer}>
         {messages && messages.length > 0
           ? messages.map((m) => (
               <div key={m.id} className={styles.message}>
-                <div className={styles.messageDate}>
-                  {moment(m.createdAt).fromNow()}
+                <div className={styles.messageHeading}>
+                  <span className={styles.messageAuthor}>{m.user.name}</span>
+                  <span className={styles.messageDate}>
+                    {moment(m.createdAt).fromNow()}
+                  </span>
                 </div>
-                <div className={styles.messageAuthor}>{m.user.name}</div>
                 <div className={styles.messageBody}>{m.body}</div>
               </div>
             ))

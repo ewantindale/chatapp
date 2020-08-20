@@ -1,14 +1,18 @@
 .container {
   padding: 1rem;
   width: 20vw;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  background: #0d1c2b;
 }
 
 .room {
   cursor: pointer;
   padding: 1rem 0rem;
-  color: #6a7e97;
   border-bottom: 1px solid #6a7e97;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   transition: 0.2s ease;
 }
@@ -19,9 +23,26 @@
 
 .currentRoom {
   padding: 1rem 0rem;
-  color: white;
   border-bottom: 1px solid #6a7e97;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   font-weight: bold;
+}
+
+.joinButton {
+  background: #508aa8;
+  border: none;
+  color: #13293d;
+  transition: 0.2s ease;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.joinButton:hover {
+  background-color: #e8f1f2;
+}
+
+.joinButton:focus {
+  outline: 0;
 }

@@ -9,17 +9,23 @@
 .messageContainer {
   display: flex;
   flex-direction: column;
-  background-color: #232c39;
+  background-color: none;
   height: 100%;
   overflow-y: scroll;
-  padding-right: 1rem;
+  background: none;
+  border-bottom: 2px solid #0d1c2b;
+  padding-top: 1rem;
 }
 
 .message {
-  background-color: #151b22;
-  padding: 1rem;
-  margin-top: 1rem;
   border-radius: 5px;
+  background: #0d1c2b;
+  padding: 1rem;
+  margin: 0 1rem 1rem 1rem;
+}
+
+.messageHeading {
+  margin-bottom: 0.2rem;
 }
 
 .messageAuthor {
@@ -27,24 +33,24 @@
 }
 
 .messageDate {
-  color: darkgrey;
-  float: right;
+  color: rgba(211, 211, 211, 0.37);
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
 }
 
 .messageForm {
   margin-top: auto;
   display: flex;
-  padding: 1rem 1rem 1rem 0;
 }
 
 .messageForm input {
   background: none;
-  padding: 0.5rem;
+  border: none;
   font-size: 1.5rem;
-  color: white;
-  border: 1px solid #6a7e97;
+  color: #e8f1f2;
   transition: 0.2s ease;
   width: 100%;
+  padding: 1rem;
 }
 
 .messageForm input:hover {
@@ -53,7 +59,6 @@
 
 .messageForm input:focus {
   outline: 0;
-  border: 1px solid white;
 }
 
 .messageForm input::placeholder {
@@ -62,25 +67,13 @@
 }
 
 .header {
-  padding: 1rem 1rem 1rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 2px solid #0d1c2b;
 }
 
-.logoutButton {
-  padding: 0.5rem;
-  background: #6a7e97;
-  border: 1px solid #6a7e97;
-  color: #232c39;
-  font-size: 1.5rem;
-  transition: 0.2s ease;
-}
-
-.logoutButton:hover {
-  background-color: #8d9fb4;
-}
-
-.logoutButton:focus {
-  outline: 0;
+.header h3 {
+  margin: 0;
 }

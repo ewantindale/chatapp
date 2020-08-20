@@ -7,6 +7,7 @@ import {
   selectRoomsLoading,
   selectCurrentRoom,
 } from './roomsSlice';
+
 import styles from './Rooms.css';
 
 export default function Rooms() {
@@ -42,9 +43,15 @@ export default function Rooms() {
           }
         >
           {room.name}
-          <button type="button" onClick={() => dispatch(switchRoom(room))}>
-            Join
-          </button>
+          {currentRoom && room.id !== currentRoom.id ? (
+            <button
+              type="button"
+              onClick={() => dispatch(switchRoom(room))}
+              className={styles.joinButton}
+            >
+              Join
+            </button>
+          ) : null}
         </div>
       ))}
     </div>

@@ -8,7 +8,7 @@
 
 .container h2 {
   font-size: 4rem;
-  color: #6a7e97;
+  color: #508aa8;
 }
 
 .loginForm {
@@ -21,38 +21,39 @@
   background: none;
   padding: 0.5rem;
   font-size: 1.5rem;
-  color: white;
+  color: #e8f1f2;
   margin-top: 1rem;
-  border: 1px solid #6a7e97;
+  border: none;
+  border-bottom: 1px solid #508aa8;
   transition: 0.2s ease;
 }
 
 .loginForm .input:hover {
-  border-color: #8d9fb4;
+  border-color: #e8f1f2;
 }
 
 .loginForm .input:focus {
   outline: 0;
-  border: 1px solid white;
+  border-color: #e8f1f2;
 }
 
 .loginForm .input::placeholder {
-  color: #6a7e97;
+  color: #508aa8;
   opacity: 1;
 }
 
 .loginForm button {
   padding: 0.5rem;
-  background: #6a7e97;
-  border: 1px solid #6a7e97;
-  color: #232c39;
+  background: #508aa8;
+  border: none;
+  color: #031927;
   font-size: 1.5rem;
   margin-top: 1rem;
   transition: 0.2s ease;
 }
 
 .loginForm button:hover {
-  background-color: #8d9fb4;
+  background-color: #e8f1f2;
 }
 
 .loginForm button:focus {

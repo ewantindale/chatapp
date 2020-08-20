@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const db = require("./config/database");
 const app = express();
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
 
+const server = require("http").createServer(app);
+const io = require("socket.io")(server, { serveClient: false });
 io.on("connection", (socket) => {
   console.log("user connected");
 
@@ -12,9 +12,13 @@ io.on("connection", (socket) => {
     console.log("a user submitted a message");
     io.emit("new_message");
   });
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
 });
 
-http.listen(5001, () => {
+server.listen(5001, () => {
   console.log("listening on *:5001");
 });
 

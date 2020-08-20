@@ -1,0 +1,24 @@
+.container {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container button {
+  background: #508aa8;
+  border: none;
+  color: #13293d;
+  transition: 0.2s ease;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+}
+
+.container button:hover {
+  background-color: #e8f1f2;
+}
+
+.container button:focus {
+  outline: 0;
+}
