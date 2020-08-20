@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUserInfo } from '../auth/authSlice';
 import { selectCurrentRoom } from '../rooms/roomsSlice';
-import { addMessage, getMessages, selectMessages } from './chatSlice';
+import { sendMessage, getMessages, selectMessages } from './chatSlice';
 import styles from './Chat.css';
 
 export default function Chat() {
@@ -12,13 +12,24 @@ export default function Chat() {
   const { name } = useSelector(selectUserInfo);
   const messages = useSelector(selectMessages);
 
+  const messagesEndRef = useRef(null);
+
+  function scrollToBottom() {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView(false);
+    }
+  }
+
+  useEffect(scrollToBottom, [messages]);
+
   useEffect(() => {
     dispatch(getMessages());
   }, [currentRoom, dispatch]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch(addMessage(message));
+    dispatch(sendMessage(message));
+
     setMessage('');
   }
 
@@ -48,7 +59,7 @@ export default function Chat() {
       </div>
 
       <div className={styles.messageContainer}>
-        {messages
+        {messages && messages.length > 0
           ? messages.map((m) => (
               <div key={m.id} className={styles.message}>
                 <div className={styles.messageDate}>{m.createdAt}</div>
@@ -57,6 +68,7 @@ export default function Chat() {
               </div>
             ))
           : null}
+        <div ref={messagesEndRef} />
       </div>
 
       <form onSubmit={handleSubmit} className={styles.messageForm}>

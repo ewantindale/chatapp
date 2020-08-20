@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const io = require("socket.io");
 const { Room, Message, User } = require("../../models/models");
 
 // POST /api/rooms
@@ -29,7 +29,6 @@ router.get("/:id/messages", async (req, res) => {
 // POST /api/rooms/:id/messages
 // Add a new message in the specified room
 router.post("/:id/messages", async (req, res) => {
-  console.log("SERVER RECEIVED REQUEST BODY: ", req.body);
   const { body, userId, roomId } = req.body;
 
   const messageInfo = {
@@ -40,7 +39,11 @@ router.post("/:id/messages", async (req, res) => {
 
   const message = await Message.create(messageInfo);
 
-  return res.status(201).json(message);
+  const messageInDatabase = await Message.findByPk(message.id, {
+    include: [{ model: User, attributes: { exclude: ["password"] } }],
+  });
+
+  return res.status(201).json(messageInDatabase);
 });
 
 async function roomExists(name) {

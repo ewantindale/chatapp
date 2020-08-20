@@ -1,8 +1,22 @@
 require("dotenv").config();
 const express = require("express");
 const db = require("./config/database");
-
 const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
+
+  socket.on("new_message", () => {
+    console.log("a user submitted a message");
+    io.emit("new_message");
+  });
+});
+
+http.listen(5001, () => {
+  console.log("listening on *:5001");
+});
 
 app.use(express.json());
 

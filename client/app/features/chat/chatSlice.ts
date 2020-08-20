@@ -7,11 +7,14 @@ import api from '../../constants/api.json';
 const chatSlice = createSlice({
   name: 'chat',
   initialState: {
-    messages: null,
+    messages: [],
     isLoading: false,
     error: null,
   },
   reducers: {
+    addMessage: (state, action) => {
+      state.messages = [...state.messages, action.payload];
+    },
     messagesLoading: (state) => {
       state.isLoading = true;
     },
@@ -27,7 +30,12 @@ const chatSlice = createSlice({
 
 export default chatSlice.reducer;
 
-export const { messagesLoading, messagesLoaded, chatError } = chatSlice.actions;
+export const {
+  addMessage,
+  messagesLoading,
+  messagesLoaded,
+  chatError,
+} = chatSlice.actions;
 
 export const selectMessages = (state: RootState) => state.chat.messages;
 
@@ -45,7 +53,7 @@ export const getMessages = (): AppThunk => {
   };
 };
 
-export const addMessage = (msg): AppThunk => {
+export const sendMessage = (msg): AppThunk => {
   return async (dispatch, getState) => {
     const state = getState();
     const { user } = state.auth;
@@ -62,11 +70,15 @@ export const addMessage = (msg): AppThunk => {
       userId: user.id,
       roomId: currentRoom.id,
     });
-
     try {
-      await axios.post(`${api.ROOMS}/${currentRoom.id}/messages`, body, config);
-    } catch (err) {
-      dispatch(chatError(err.response.data.msg));
+      const res = await axios.post(
+        `${api.ROOMS}/${currentRoom.id}/messages`,
+        body,
+        config
+      );
+      dispatch(addMessage(res.data));
+    } catch (error) {
+      console.log(error);
     }
   };
 };
