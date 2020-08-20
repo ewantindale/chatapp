@@ -3,22 +3,22 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const User = require("../../models/User");
+const { User } = require("../../models/models");
 
 // POST /api/users
 // Register
 router.post("/", async (req, res) => {
-  const { username, password } = req.body;
+  const { name, password } = req.body;
 
-  if (!username || !password) {
+  if (!name || !password) {
     return res.status(400).json({ msg: "Missing one or more fields" });
   }
 
-  if (await userExists(username)) {
+  if (await userExists(name)) {
     return res.status(400).json({ msg: "User already exists" });
   }
 
-  const userInfo = { username, password };
+  const userInfo = { name, password };
 
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(userInfo.password, salt);
@@ -33,12 +33,12 @@ router.post("/", async (req, res) => {
 
   return res
     .status(201)
-    .json({ token, user: { id: user.id, username: user.username } });
+    .json({ token, user: { id: user.id, name: user.name } });
 });
 
-async function userExists(username) {
+async function userExists(name) {
   try {
-    const user = await User.findOne({ where: { username: username } });
+    const user = await User.findOne({ where: { name: name } });
     if (user) return true;
   } catch (e) {
     return false;

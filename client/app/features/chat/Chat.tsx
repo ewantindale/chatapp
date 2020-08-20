@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUserInfo } from '../auth/authSlice';
+import { selectCurrentRoom } from '../rooms/roomsSlice';
+import { addMessage, getMessages, selectMessages } from './chatSlice';
 import styles from './Chat.css';
 
 export default function Chat() {
   const [message, setMessage] = useState('');
+  const currentRoom = useSelector(selectCurrentRoom);
   const dispatch = useDispatch();
-  const { username } = useSelector(selectUserInfo);
+  const { name } = useSelector(selectUserInfo);
+  const messages = useSelector(selectMessages);
+
+  useEffect(() => {
+    dispatch(getMessages());
+  }, [currentRoom, dispatch]);
 
   function handleSubmit(event) {
     event.preventDefault();
-
+    dispatch(addMessage(message));
     setMessage('');
   }
 
@@ -25,27 +33,30 @@ export default function Chat() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2>Chat</h2>
+        <h3>{currentRoom ? currentRoom.name : null}</h3>
         <span className={styles.userInfo}>
           Logged in as
-          {` ${username}`}
+          {` ${name}`}
+          <button
+            type="button"
+            onClick={handleLogoutClicked}
+            className={styles.logoutButton}
+          >
+            Logout
+          </button>
         </span>
-        <button
-          type="button"
-          onClick={handleLogoutClicked}
-          className={styles.logoutButton}
-        >
-          Logout
-        </button>
       </div>
 
       <div className={styles.messageContainer}>
-        {/* {state.messages.map((m) => (
-          <div key={m.id} className={styles.message}>
-            <div className={styles.author}>{m.author}</div>
-            <div className={styles.text}>{m.text}</div>
-          </div>
-        ))} */}
+        {messages
+          ? messages.map((m) => (
+              <div key={m.id} className={styles.message}>
+                <div className={styles.messageDate}>{m.createdAt}</div>
+                <div className={styles.messageAuthor}>{m.user.name}</div>
+                <div className={styles.messageBody}>{m.body}</div>
+              </div>
+            ))
+          : null}
       </div>
 
       <form onSubmit={handleSubmit} className={styles.messageForm}>

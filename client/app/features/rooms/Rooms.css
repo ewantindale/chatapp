@@ -1,0 +1,27 @@
+.container {
+  padding: 1rem;
+  width: 20vw;
+}
+
+.room {
+  cursor: pointer;
+  padding: 1rem 0rem;
+  color: #6a7e97;
+  border-bottom: 1px solid #6a7e97;
+  display: flex;
+  justify-content: space-between;
+  transition: 0.2s ease;
+}
+
+.room:hover {
+  font-weight: bold;
+}
+
+.currentRoom {
+  padding: 1rem 0rem;
+  color: white;
+  border-bottom: 1px solid #6a7e97;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}

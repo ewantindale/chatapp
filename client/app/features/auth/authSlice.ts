@@ -61,7 +61,7 @@ export const {
   authError,
 } = authSlice.actions;
 
-export const login = (username: string, password: string): AppThunk => {
+export const login = (name: string, password: string): AppThunk => {
   return async (dispatch) => {
     const config = {
       headers: {
@@ -69,10 +69,30 @@ export const login = (username: string, password: string): AppThunk => {
       },
     };
 
-    const body = JSON.stringify({ username, password });
+    const body = JSON.stringify({ name, password });
 
     try {
       const res = await axios.post(api.AUTH, body, config);
+      dispatch(loginSuccess(res.data));
+    } catch (err) {
+      dispatch(authError(err.response.data.msg));
+      dispatch(loginFail());
+    }
+  };
+};
+
+export const register = (name: string, password: string): AppThunk => {
+  return async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const body = JSON.stringify({ name, password });
+
+    try {
+      const res = await axios.post(api.USERS, body, config);
       dispatch(loginSuccess(res.data));
     } catch (err) {
       dispatch(authError(err.response.data.msg));

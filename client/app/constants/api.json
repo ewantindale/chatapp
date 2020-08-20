@@ -1,4 +1,6 @@
 {
   "AUTH": "http://localhost:5000/api/auth",
-  "USERS": "http://localhost:5000/api/users"
+  "USERS": "http://localhost:5000/api/users",
+  "ROOMS": "http://localhost:5000/api/rooms",
+  "MESSAGES": "http://localhost:5000/api/messages"
 }

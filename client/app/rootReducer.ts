@@ -1,12 +1,15 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
-// eslint-disable-next-line import/no-cycle
 import authReducer from './features/auth/authSlice';
+import roomsReducer from './features/rooms/roomsSlice';
+import chatReducer from './features/chat/chatSlice';
 
 export default function createRootReducer(history: History) {
   return combineReducers({
     router: connectRouter(history),
     auth: authReducer,
+    rooms: roomsReducer,
+    chat: chatReducer,
   });
 }

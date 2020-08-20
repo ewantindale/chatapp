@@ -3,19 +3,19 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const User = require("../../models/User");
+const { User } = require("../../models/models");
 
 // POST /api/auth
 // Authenticate (login) a user
 router.post("/", async (req, res) => {
-  const { username, password } = req.body;
+  const { name, password } = req.body;
 
-  if (!username || !password) {
+  if (!name || !password) {
     return res.status(400).json({ msg: "Missing one or more fields" });
   }
 
   try {
-    const user = await User.findOne({ where: { username: username } });
+    const user = await User.findOne({ where: { name: name } });
 
     const passwordsMatch = await bcrypt.compare(password, user.password);
 
@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
 
     return res
       .status(200)
-      .json({ token, user: { id: user.id, username: user.username } });
+      .json({ token, user: { id: user.id, name: user.name } });
   } catch (error) {
     return res.status(400).json({ msg: "Invalid credentials" });
   }

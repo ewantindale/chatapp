@@ -8,6 +8,7 @@ app.use(express.json());
 
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/users", require("./routes/api/users"));
+app.use("/api/rooms", require("./routes/api/rooms"));
 
 const PORT = process.env.PORT || 5000;
 
