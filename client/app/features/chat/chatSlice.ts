@@ -1,4 +1,5 @@
 import axios from 'axios';
+import io from 'socket.io-client';
 import { createSlice } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import { AppThunk, RootState } from '../../store';
@@ -77,6 +78,7 @@ export const sendMessage = (msg): AppThunk => {
         config
       );
       dispatch(addMessage(res.data));
+      io('http://localhost:5001').emit('new_message');
     } catch (error) {
       console.log(error);
     }

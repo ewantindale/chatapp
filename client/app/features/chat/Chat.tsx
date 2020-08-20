@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import io from 'socket.io-client';
+import moment from 'moment';
 import { logout, selectUserInfo } from '../auth/authSlice';
 import { selectCurrentRoom } from '../rooms/roomsSlice';
 import { sendMessage, getMessages, selectMessages } from './chatSlice';
@@ -19,12 +21,24 @@ export default function Chat() {
       messagesEndRef.current.scrollIntoView(false);
     }
   }
-
   useEffect(scrollToBottom, [messages]);
 
   useEffect(() => {
     dispatch(getMessages());
   }, [currentRoom, dispatch]);
+
+  useEffect(() => {
+    const socket = io('http://localhost:5001');
+
+    socket.on('new_message', () => {
+      console.log('received new_message');
+      dispatch(getMessages());
+    });
+
+    return () => {
+      socket.off();
+    };
+  }, [dispatch]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -62,7 +76,9 @@ export default function Chat() {
         {messages && messages.length > 0
           ? messages.map((m) => (
               <div key={m.id} className={styles.message}>
-                <div className={styles.messageDate}>{m.createdAt}</div>
+                <div className={styles.messageDate}>
+                  {moment(m.createdAt).fromNow()}
+                </div>
                 <div className={styles.messageAuthor}>{m.user.name}</div>
                 <div className={styles.messageBody}>{m.body}</div>
               </div>
