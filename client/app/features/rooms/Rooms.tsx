@@ -33,17 +33,15 @@ export default function Rooms() {
   return (
     <div className={styles.container}>
       <h3>Rooms</h3>
-      {rooms.map((room) => (
-        <div
-          key={room.id}
-          className={
-            currentRoom && room.id === currentRoom.id
-              ? styles.currentRoom
-              : styles.room
-          }
-        >
-          {room.name}
-          {currentRoom && room.id !== currentRoom.id ? (
+      {rooms.map((room) =>
+        currentRoom && room.id === currentRoom.id ? (
+          <div key={room.id} className={styles.currentRoom}>
+            {room.name}
+          </div>
+        ) : (
+          <div key={room.id} className={styles.room}>
+            {room.name}
+
             <button
               type="button"
               onClick={() => dispatch(switchRoom(room))}
@@ -51,9 +49,9 @@ export default function Rooms() {
             >
               Join
             </button>
-          ) : null}
-        </div>
-      ))}
+          </div>
+        )
+      )}
     </div>
   );
 }
