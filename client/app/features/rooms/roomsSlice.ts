@@ -8,7 +8,7 @@ import api from '../../constants/api.json';
 const roomsSlice = createSlice({
   name: 'rooms',
   initialState: {
-    rooms: null,
+    rooms: [],
     currentRoom: null,
     isLoading: false,
     error: null,
@@ -51,10 +51,19 @@ export const getRooms = (): AppThunk => {
   return async (dispatch, getState) => {
     const state = getState();
     const res = await axios.get(api.ROOMS);
-    if (!res.data.includes(state.rooms.currentRoom)) {
-      switchRoom(null);
-    }
+
     dispatch(roomsLoaded(res.data));
+
+    if (
+      !state.rooms.currentRoom ||
+      !state.rooms.rooms.includes(state.rooms.currentRoom)
+    ) {
+      if (state.rooms.rooms.length > 0) {
+        dispatch(switchRoom(res.data[0]));
+      } else {
+        dispatch(switchRoom(null));
+      }
+    }
   };
 };
 

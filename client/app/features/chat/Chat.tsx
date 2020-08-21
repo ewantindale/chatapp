@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import moment from 'moment';
 import { logout, selectUserInfo } from '../auth/authSlice';
-import { selectCurrentRoom } from '../rooms/roomsSlice';
+import { selectCurrentRoom, selectRooms } from '../rooms/roomsSlice';
 import { sendMessage, getMessages, selectMessages } from './chatSlice';
 import UserInfo from '../../components/UserInfo';
 import styles from './Chat.css';
@@ -14,6 +14,7 @@ export default function Chat() {
   const dispatch = useDispatch();
   const { name } = useSelector(selectUserInfo);
   const messages = useSelector(selectMessages);
+  const { rooms } = useSelector(selectRooms);
 
   const messagesEndRef = useRef(null);
 

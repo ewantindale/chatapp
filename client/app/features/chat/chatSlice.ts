@@ -44,6 +44,7 @@ export const getMessages = (): AppThunk => {
   return async (dispatch, getState) => {
     const state = getState();
     const { currentRoom } = state.rooms;
+    if (!currentRoom) return;
     const roomId = currentRoom.id;
     try {
       const res = await axios.get(`${api.ROOMS}/${roomId}/messages`);
