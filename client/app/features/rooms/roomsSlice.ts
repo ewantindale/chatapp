@@ -1,4 +1,5 @@
 import axios from 'axios';
+import io from 'socket.io-client';
 import { createSlice } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import { AppThunk, RootState } from '../../store';
@@ -69,6 +70,7 @@ export const createRoom = (name): AppThunk => {
     try {
       const res = await axios.post(api.ROOMS, body, config);
       dispatch(addRoom(res.data));
+      io('http://localhost:5001').emit('rooms_changed');
     } catch (err) {
       dispatch(roomsError(err.response.data.msg));
     }
@@ -80,6 +82,7 @@ export const deleteRoom = (id): AppThunk => {
     try {
       await axios.delete(`${api.ROOMS}/${id}`);
       dispatch(removeRoom(id));
+      io('http://localhost:5001').emit('rooms_changed');
     } catch (err) {
       dispatch(roomsError(err.response.data.msg));
     }

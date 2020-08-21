@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import io from 'socket.io-client';
 import {
   switchRoom,
   getRooms,
@@ -21,6 +22,20 @@ export default function Rooms() {
   // Fetch rooms initially
   useEffect(() => {
     dispatch(getRooms());
+  }, [dispatch]);
+
+  // Fetch rooms when we receive a message via socket that the rooms have been updated
+  useEffect(() => {
+    const socket = io('http://localhost:5001');
+
+    socket.on('rooms_changed', () => {
+      console.log('rooms_changed');
+      dispatch(getRooms());
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, [dispatch]);
 
   // Whenever we fetch the list of rooms, check if we are in a room and if not, join the first one.

@@ -13,6 +13,11 @@ io.on("connection", (socket) => {
     io.emit("new_message");
   });
 
+  socket.on("rooms_changed", () => {
+    console.log("a user created/deleted a room");
+    io.emit("rooms_changed");
+  });
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
