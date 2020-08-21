@@ -29,7 +29,10 @@ export default function Chat() {
   }, [currentRoom, dispatch]);
 
   useEffect(() => {
-    const socket = io('http://localhost:5001');
+    if (!currentRoom) {
+      return;
+    }
+    const socket = io(`http://localhost:5001?room=${currentRoom.id}`);
 
     socket.on('new_message', () => {
       console.log('received new_message');
@@ -39,7 +42,7 @@ export default function Chat() {
     return () => {
       socket.disconnect();
     };
-  }, [dispatch]);
+  }, [dispatch, currentRoom]);
 
   function handleSubmit(event) {
     event.preventDefault();

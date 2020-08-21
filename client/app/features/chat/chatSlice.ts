@@ -78,7 +78,7 @@ export const sendMessage = (msg): AppThunk => {
         config
       );
       dispatch(addMessage(res.data));
-      io('http://localhost:5001').emit('new_message');
+      io('http://localhost:5001').emit('new_message', currentRoom.id);
     } catch (error) {
       console.log(error);
     }

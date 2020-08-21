@@ -6,11 +6,18 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, { serveClient: false });
 io.on("connection", (socket) => {
-  console.log("user connected");
+  const { room } = socket.handshake.query;
 
-  socket.on("new_message", () => {
+  if (room) {
+    socket.join(room, (err) => {
+      if (err) return console.log(err);
+      console.log(`User connected to room ${room}`);
+    });
+  }
+
+  socket.on("new_message", (r) => {
     console.log("a user submitted a message");
-    io.emit("new_message");
+    io.to(r).emit("new_message");
   });
 
   socket.on("rooms_changed", () => {
