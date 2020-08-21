@@ -8,7 +8,6 @@
 }
 
 .room {
-  cursor: pointer;
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -17,10 +16,7 @@
   background: #508aa8;
   border-radius: 5px;
   color: #13293d;
-}
-
-.room:hover {
-  font-weight: bold;
+  margin-top: 1rem;
 }
 
 .currentRoom {
@@ -28,25 +24,30 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-weight: bold;
-  background: #508aa8;
+  transition: 0.2s ease;
+  background: #e8f1f2;
   border-radius: 5px;
   color: #13293d;
+  margin-top: 1rem;
 }
 
-.joinButton {
-  background: #508aa8;
+.joinButton,
+.deleteButton {
+  background: #13293d;
   border: none;
-  color: #13293d;
+  color: #e8f1f2;
   transition: 0.2s ease;
   margin-left: 1rem;
   padding: 0.5rem 1rem;
 }
 
-.joinButton:hover {
+.joinButton:hover,
+.deleteButton:hover {
   background-color: #e8f1f2;
+  color: #13293d;
 }
 
-.joinButton:focus {
+.joinButton:focus,
+.deleteButton:focus {
   outline: 0;
 }

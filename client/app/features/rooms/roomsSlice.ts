@@ -26,6 +26,12 @@ const roomsSlice = createSlice({
     switchRoom: (state, action) => {
       state.currentRoom = action.payload;
     },
+    addRoom: (state, action) => {
+      state.rooms = [...state.rooms, action.payload];
+    },
+    removeRoom: (state, action) => {
+      state.rooms = state.rooms.filter((i) => i.id !== action.payload);
+    },
   },
 });
 
@@ -36,6 +42,8 @@ export const {
   roomsLoaded,
   roomsError,
   switchRoom,
+  addRoom,
+  removeRoom,
 } = roomsSlice.actions;
 
 export const getRooms = (): AppThunk => {
@@ -43,6 +51,35 @@ export const getRooms = (): AppThunk => {
     try {
       const res = await axios.get(api.ROOMS);
       dispatch(roomsLoaded(res.data));
+    } catch (err) {
+      dispatch(roomsError(err.response.data.msg));
+    }
+  };
+};
+
+export const createRoom = (name): AppThunk => {
+  return async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const body = JSON.stringify({ name: name });
+    try {
+      const res = await axios.post(api.ROOMS, body, config);
+      dispatch(addRoom(res.data));
+    } catch (err) {
+      dispatch(roomsError(err.response.data.msg));
+    }
+  };
+};
+
+export const deleteRoom = (id): AppThunk => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`${api.ROOMS}/${id}`);
+      dispatch(removeRoom(id));
     } catch (err) {
       dispatch(roomsError(err.response.data.msg));
     }

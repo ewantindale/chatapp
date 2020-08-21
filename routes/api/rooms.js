@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const io = require("socket.io");
 const { Room, Message, User } = require("../../models/models");
 
 // POST /api/rooms
@@ -8,6 +7,12 @@ router.post("/", async (req, res) => {
   const { name } = req.body;
   const room = await Room.create({ name });
   res.status(201).json(room);
+});
+
+// DELETE /api/rooms/:id
+router.delete("/:id", async (req, res) => {
+  const deleted = await Room.destroy({ where: { id: req.params.id } });
+  res.status(201).json({ msg: "Room deleted" });
 });
 
 // GET /api/rooms

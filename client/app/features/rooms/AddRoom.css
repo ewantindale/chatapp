@@ -1,0 +1,33 @@
+.container {
+  margin-top: auto;
+}
+
+.container form {
+  display: flex;
+  border: 1px solid #508aa8;
+  border-radius: 5px;
+}
+
+.container form input {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #e8f1f2;
+  padding: 0 1rem;
+}
+
+.container form input:focus {
+  outline: 0;
+}
+
+.container form button {
+  background: #508aa8;
+  border: none;
+  color: #13293d;
+  transition: 0.2s ease;
+  padding: 0.5rem 1rem;
+}
+
+.container form button:hover {
+  background-color: #e8f1f2;
+}

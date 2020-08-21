@@ -19,7 +19,7 @@ export default function Chat() {
 
   function scrollToBottom() {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView(false);
+      messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
     }
   }
   useEffect(scrollToBottom, [messages]);

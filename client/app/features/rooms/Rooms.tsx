@@ -6,7 +6,9 @@ import {
   selectRooms,
   selectRoomsLoading,
   selectCurrentRoom,
+  deleteRoom,
 } from './roomsSlice';
+import AddRoom from './AddRoom';
 
 import styles from './Rooms.css';
 
@@ -39,19 +41,32 @@ export default function Rooms() {
             {room.name}
           </div>
         ) : (
-          <div key={room.id} className={styles.room}>
+          <div
+            key={room.id}
+            className={styles.room}
+            onClick={() => dispatch(switchRoom(room))}
+          >
             {room.name}
+            <div>
+              {/* <button
+                type="button"
 
-            <button
-              type="button"
-              onClick={() => dispatch(switchRoom(room))}
-              className={styles.joinButton}
-            >
-              Join
-            </button>
+                className={styles.joinButton}
+              >
+                Join
+              </button> */}
+              {/* <button
+                type="button"
+                onClick={() => dispatch(deleteRoom(room.id))}
+                className={styles.deleteButton}
+              >
+                Delete
+              </button> */}
+            </div>
           </div>
         )
       )}
+      <AddRoom />
     </div>
   );
 }
