@@ -4,8 +4,8 @@ const { Room, Message, User } = require("../../models/models");
 
 // POST /api/rooms
 router.post("/", async (req, res) => {
-  const { name } = req.body;
-  const room = await Room.create({ name });
+  const { name, userId } = req.body;
+  const room = await Room.create({ name, userId });
   res.status(201).json(room);
 });
 

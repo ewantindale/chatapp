@@ -46,6 +46,9 @@ export default function Chat() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    if (!currentRoom) {
+      return;
+    }
     dispatch(sendMessage(message));
 
     setMessage('');

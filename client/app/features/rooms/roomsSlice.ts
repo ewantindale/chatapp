@@ -48,32 +48,30 @@ export const {
 } = roomsSlice.actions;
 
 export const getRooms = (): AppThunk => {
-  return async (dispatch) => {
-    try {
-      const res = await axios.get(api.ROOMS);
-      dispatch(roomsLoaded(res.data));
-    } catch (err) {
-      dispatch(roomsError(err.response.data.msg));
+  return async (dispatch, getState) => {
+    const state = getState();
+    const res = await axios.get(api.ROOMS);
+    if (!res.data.includes(state.rooms.currentRoom)) {
+      switchRoom(null);
     }
+    dispatch(roomsLoaded(res.data));
   };
 };
 
 export const createRoom = (name): AppThunk => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const state = getState();
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
 
-    const body = JSON.stringify({ name: name });
-    try {
-      const res = await axios.post(api.ROOMS, body, config);
-      dispatch(addRoom(res.data));
-      io('http://localhost:5001').emit('rooms_changed');
-    } catch (err) {
-      dispatch(roomsError(err.response.data.msg));
-    }
+    const body = JSON.stringify({ name: name, userId: state.auth.user.id });
+
+    const res = await axios.post(api.ROOMS, body, config);
+    dispatch(addRoom(res.data));
+    io('http://localhost:5001').emit('rooms_changed');
   };
 };
 

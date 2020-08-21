@@ -9,6 +9,7 @@ import {
   selectCurrentRoom,
   deleteRoom,
 } from './roomsSlice';
+import { selectUserInfo } from '../auth/authSlice';
 import AddRoom from './AddRoom';
 
 import styles from './Rooms.css';
@@ -18,6 +19,7 @@ export default function Rooms() {
   const rooms = useSelector(selectRooms);
   const roomsLoading = useSelector(selectRoomsLoading);
   const currentRoom = useSelector(selectCurrentRoom);
+  const userInfo = useSelector(selectUserInfo);
 
   // Fetch rooms initially
   useEffect(() => {
@@ -38,49 +40,35 @@ export default function Rooms() {
     };
   }, [dispatch]);
 
-  // Whenever we fetch the list of rooms, check if we are in a room and if not, join the first one.
-  useEffect(() => {
-    if (rooms && currentRoom === null) {
-      dispatch(switchRoom(rooms[0]));
-    }
-  }, [rooms, dispatch, currentRoom]);
-
   if (!rooms || roomsLoading) return <p>Loading rooms...</p>;
 
   return (
     <div className={styles.container}>
       <h3>Rooms</h3>
-      {rooms.map((room) =>
-        currentRoom && room.id === currentRoom.id ? (
-          <div key={room.id} className={styles.currentRoom}>
-            {room.name}
-          </div>
-        ) : (
-          <div
-            key={room.id}
-            className={styles.room}
-            onClick={() => dispatch(switchRoom(room))}
-          >
-            {room.name}
-            <div>
-              {/* <button
-                type="button"
-
-                className={styles.joinButton}
-              >
-                Join
-              </button> */}
-              {/* <button
+      {rooms.map((room) => (
+        <div
+          key={room.id}
+          className={
+            currentRoom && currentRoom.id === room.id
+              ? styles.currentRoom
+              : styles.room
+          }
+          onClick={() => dispatch(switchRoom(room))}
+        >
+          {room.name}
+          <div>
+            {userInfo.id === room.userId ? (
+              <button
                 type="button"
                 onClick={() => dispatch(deleteRoom(room.id))}
                 className={styles.deleteButton}
               >
                 Delete
-              </button> */}
-            </div>
+              </button>
+            ) : null}
           </div>
-        )
-      )}
+        </div>
+      ))}
       <AddRoom />
     </div>
   );

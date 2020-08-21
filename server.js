@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
 });
 
 server.listen(5001, () => {
-  console.log("listening on *:5001");
+  console.log("listening on port 5001");
 });
 
 app.use(express.json());
