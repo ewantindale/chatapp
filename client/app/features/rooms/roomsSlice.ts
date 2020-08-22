@@ -54,11 +54,8 @@ export const getRooms = (): AppThunk => {
 
     dispatch(roomsLoaded(res.data));
 
-    if (
-      !state.rooms.currentRoom ||
-      !state.rooms.rooms.includes(state.rooms.currentRoom)
-    ) {
-      if (state.rooms.rooms.length > 0) {
+    if (!state.rooms.currentRoom) {
+      if (res.data.length > 0) {
         dispatch(switchRoom(res.data[0]));
       } else {
         dispatch(switchRoom(null));

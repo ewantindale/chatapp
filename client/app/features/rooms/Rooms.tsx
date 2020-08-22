@@ -55,21 +55,20 @@ export default function Rooms() {
           }
           onClick={() => dispatch(switchRoom(room))}
         >
-          {room.name}
-          <div>
-            {userInfo.id === room.userId ? (
-              <button
-                type="button"
-                onClick={() => dispatch(deleteRoom(room.id))}
-                className={styles.deleteButton}
-              >
-                Delete
-              </button>
-            ) : null}
-          </div>
+          <span className={styles.roomName}>{room.name}</span>
+
+          {/* {userInfo.id === room.userId ? (
+            <button
+              type="button"
+              onClick={() => dispatch(deleteRoom(room.id))}
+              className={styles.deleteButton}
+            >
+              X
+            </button>
+          ) : null} */}
         </div>
       ))}
-      <AddRoom />
+      {/* <AddRoom /> */}
     </div>
   );
 }
